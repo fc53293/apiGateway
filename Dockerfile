@@ -53,5 +53,5 @@ RUN chown -R www-data:www-data .
 USER www-data
 
 EXPOSE 8080
-
+ENV PORT 8080
 CMD ["php-fpm"]
