@@ -1,80 +1,49 @@
-#######################################################################
-#            Laravel/Lumen 5.8 Application - Dockerfile v0.5          #
-#######################################################################
+FROM php:7.2-fpm
 
-#------------- Setup Environment -------------------------------------------------------------
-
-# Pull base image
-FROM ubuntu:18.04
-
-# Install common tools 
-RUN apt-get update
-RUN apt-get install -y wget curl nano htop git unzip bzip2 software-properties-common locales
-
-# Set evn var to enable xterm terminal
-ENV TERM=xterm
-
-# Set timezone to UTC to avoid tzdata interactive mode during build
-ENV TZ=Etc/UTC
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+# Copy composer.lock and composer.json
+COPY composer.lock composer.json /var/www/
 
 # Set working directory
-WORKDIR /var/www/html
+WORKDIR /var/www
 
-# Set up locales 
-# RUN locale-gen 
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    locales \
+    zip \
+    jpegoptim optipng pngquant gifsicle \
+    vim \
+    unzip \
+    git \
+    curl
 
-#------------- Application Specific Stuff ----------------------------------------------------
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install PHP
-RUN LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
-RUN apt update
-RUN apt-get install -y \
-    php7.4-fpm \ 
-    php7.4-common \ 
-    php7.4-curl \ 
-    php7.4-mysql \ 
-    php7.4-mbstring \ 
-    php7.4-json \
-    php7.4-xml \
-    php7.4-bcmath
-
-# Install NPM and Node.js
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
-RUN apt-get install -y nodejs 
-
-#------------- FPM & Nginx configuration ----------------------------------------------------
-
-# Config fpm to use TCP instead of unix socket
-ADD resources/www.conf /etc/php/7.4/fpm/pool.d/www.conf
-RUN mkdir -p /var/run/php
-
-# Install Nginx
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ABF5BD827BD9BF62
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
-RUN echo "deb http://nginx.org/packages/ubuntu/ trusty nginx" >> /etc/apt/sources.list
-RUN echo "deb-src http://nginx.org/packages/ubuntu/ trusty nginx" >> /etc/apt/sources.list
-RUN apt-get update
-
-RUN apt-get install -y nginx
-
-ADD resources/default /etc/nginx/sites-enabled/
-ADD resources/nginx.conf /etc/nginx/
-
-#------------- Composer & laravel configuration ----------------------------------------------------
+# Install extensions
+RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
+RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
+RUN docker-php-ext-install gd
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-#------------- Supervisor Process Manager ----------------------------------------------------
+# Add user for laravel application
+RUN groupadd -g 1000 www
+RUN useradd -u 1000 -ms /bin/bash -g www www
 
-# Install supervisor
-RUN apt-get install -y supervisor
-RUN mkdir -p /var/log/supervisor
-ADD resources/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# Copy existing application directory contents
+COPY . /var/www
 
-#------------- Container Config ---------------------------------------------------------------
+# Copy existing application directory permissions
+COPY --chown=www:www . /var/www
 
-CMD php -S 0.0.0.0:8080 -t public
+# Change current user to www
+USER www
 
 EXPOSE 8080
+CMD php -S 0.0.0.0:8080 -t public
+
