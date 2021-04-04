@@ -4,23 +4,30 @@ metadata:
   name: apigateway
   namespace: default
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: apigateway
   template:
-    metadata:
+    metadada:
       labels:
-        app: apigateway
-    spec:
-      containers:
+	app: apigateway
+  spec:
+    containers:
       - name: apigateway
-        image: gcr.io/projetoptiptr-307918/apigateway:v1
-        ports:
-        - containerPort: 80
+    	image: gcr.io/projetoptiptr-307918/apigateway:v1
+	imagePullPolicy: IfNotPresent
+	ports:
+	  - containerPort: 80
         livenessProbe:
-        httpGet:
-     	    path: /healthz
-            port: 80
-        initialDelaySeconds: 15
-        failureThreshold: 3
-        periodSeconds: 3
+          httpGet:
+             path: /healtz
+             port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+             path: /healthz
+             port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 3
