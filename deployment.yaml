@@ -32,7 +32,7 @@ spec:
               port: 80
             initialDelaySeconds: 300
             periodSeconds: 5
-            timeoutseconds: 5
+            timeoutSeconds: 5
             failureThreshold: 10
           readinessProbe:
             httpGet:
@@ -40,7 +40,7 @@ spec:
               port: 80
             initialDelaySeconds: 300
             periodSeconds: 5
-            timeoutseconds: 5
+            timeoutSeconds: 5
             failureThreshold: 10
 
 --- 
