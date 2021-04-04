@@ -15,6 +15,9 @@
 
 //use Illuminate\Support\Facades\Route;
 
+Route::get('/healthz', function () {
+    return 'ok';
+});
 
 $router->get('/', function (){
     return view('login');

@@ -17,3 +17,10 @@ spec:
         image: gcr.io/projetoptiptr-307918/apigateway:v1
         ports:
         - containerPort: 80
+        livenessProbe:
+        httpGet:
+     	    path: /healthz
+            port: 80
+        initialDelaySeconds: 15
+        failureThreshold: 3
+        periodSeconds: 3
