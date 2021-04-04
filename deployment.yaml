@@ -17,13 +17,20 @@ spec:
         - name: apigateway
           image: gcr.io/projetoptiptr-307918/apigateway:v1
           imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 1
+              memory: 1Gi
+            requests:
+              cpu: 100m
+            memory: 250Mi
           ports:
             - containerPort: 80
           livenessProbe:
             httpGet:
               path: /healthz
               port: 80
-            initialDelaySeconds: 120
+            initialDelaySeconds: 300
             periodSeconds: 5
             timeoutseconds: 5
             failureThreshold: 10
@@ -31,7 +38,7 @@ spec:
             httpGet:
               path: /healthz
               port: 80
-            initialDelaySeconds: 150
+            initialDelaySeconds: 300
             periodSeconds: 5
             timeoutseconds: 5
             failureThreshold: 10
