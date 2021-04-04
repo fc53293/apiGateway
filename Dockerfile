@@ -44,6 +44,6 @@ COPY --chown=www:www . /var/www
 # Change current user to www
 USER www
 
-EXPOSE 80
-CMD php -S 0.0.0.0:80 -t public
+EXPOSE 8080
+CMD php -S 0.0.0.0:8080 -t public
 
