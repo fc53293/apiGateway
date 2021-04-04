@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apigateway
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: apigateway
+  template:
+    metadata:
+      labels:
+        app: apigateway
+    spec:
+      containers:
+      	- name: apigateway
+          image: gcr.io/projetoptiptr-307918/apigateway:v1
+          ports:
+	  - name: http
+          - containerPort: 80
