@@ -31,3 +31,48 @@ spec:
               port: 80
             initialDelaySeconds: 15
             periodSeconds: 3
+
+
+--- 
+#Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: service
+  annotations:
+    beta.cloud.google.com/backend-config: '{"ports": {"80":"lumen-backendconfig"}}'
+spec:
+  selector:
+    app: apigateway
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      name: http
+
+---
+#Ingress
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: myunirent-ip
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  rules:
+    - host: myunirent.pt
+      http:
+        paths:
+          - backend:
+              serviceName: service
+              servicePort: 80
+---
+#BackendConfig
+apiVersion: cloud.google.com/v1beta1
+kind: BackendConfig
+metadata:
+  name: lumen-backendconfig
+spec:
+  timeoutSec: 600
