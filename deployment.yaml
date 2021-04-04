@@ -9,7 +9,7 @@ spec:
     matchLabels:
       app: apigateway
   template:
-    metadada:
+    metadata:
       labels:
         app: apigateway
     spec:
@@ -21,16 +21,20 @@ spec:
             - containerPort: 80
           livenessProbe:
             httpGet:
-              path: /healtz
+              path: /healthz
               port: 80
-            initialDelaySeconds: 30
-            periodSeconds: 30
+            initialDelaySeconds: 120
+            periodSeconds: 5
+            timeoutseconds: 5
+            failureThreshold: 10
           readinessProbe:
             httpGet:
               path: /healthz
               port: 80
-            initialDelaySeconds: 15
-            periodSeconds: 3
+            initialDelaySeconds: 150
+            periodSeconds: 5
+            timeoutseconds: 5
+            failureThreshold: 10
 
 
 --- 
