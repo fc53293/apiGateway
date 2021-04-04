@@ -52,6 +52,6 @@ RUN chown -R www-data:www-data .
 
 USER www-data
 
-EXPOSE 9000
+EXPOSE 8080
 
 CMD ["php-fpm"]
