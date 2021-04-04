@@ -1,57 +1,48 @@
-FROM composer:1.9 as vendor
+FROM php:7.2-cli
 
-COPY ./database ./database
-COPY ./tests ./tests
+# New sources
+RUN apt-get update
+RUN apt-get install -y curl apt-transport-https wget nano
+RUN apt-get install -my wget gnupg
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | iconv -f windows-1251 | apt-key add -
+RUN curl https://packages.microsoft.com/config/debian/8/prod.list > /etc/apt/sources.list.d/mssql-release.list
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-COPY composer.json composer.json
-COPY composer.lock composer.lock
+# install SQL Server drivers
+RUN apt-get update && ACCEPT_EULA=Y apt-get install -y unixodbc-dev msodbcsql && ACCEPT_EULA=Y apt-get install -y mssql-tools
 
-RUN composer install \
-    --ignore-platform-reqs \
-    --no-interaction \
-    --no-plugins \
-    --no-scripts \
-    --prefer-dist
+# Install php extensions
+RUN apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev
+#RUN docker-php-ext-install -j$(nproc) iconv mbstring pdo_mysql soap
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 
+# Install msodbcsql
+RUN ACCEPT_EULA=Y apt-get install -y msodbcsql
 
-FROM php:7.4-fpm-alpine
+# Install sqlsrv
+RUN pecl install sqlsrv pdo_sqlsrv
+RUN docker-php-ext-enable sqlsrv pdo_sqlsrv
+RUN docker-php-ext-install pdo mbstring
+RUN apt-get update -y && apt-get install -y openssl zip unzip
 
-WORKDIR /var/www/html
+RUN pecl install redis-4.0.1 xdebug-2.6.0
+RUN docker-php-ext-enable redis xdebug
 
-COPY . .
-COPY --from=vendor /app/vendor ./vendor/
-COPY ./docker/php/php.ini /usr/local/etc/php/php.ini
+WORKDIR /app
+COPY . /app
 
-RUN apk add --no-cache \
-    oniguruma-dev \
-    mysql-client \
-    libxml2-dev \
-    libpng-dev \
-    libjpeg-turbo-dev \
-    freetype-dev \
-    git \
-    vim \
-    zip \
-    unzip \
-    curl
+RUN composer install
 
-RUN docker-php-ext-install \
-    bcmath \
-    mbstring \
-    pdo \
-    pdo_mysql \
-    tokenizer \
-    xml
+CMD cd /app
 
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-RUN docker-php-ext-install gd
+CMD composer update
 
-RUN adduser www-data www-data
+CMD php artisan swagger-lume:generate
+CMD php artisan cache:clear
+CMD php artisan route:cache
+CMD php artisan config:cache
+CMD php artisan optimize
 
-RUN chown -R www-data:www-data .
-
-USER www-data
+CMD php -S 0.0.0.0:8080 -t public
 
 EXPOSE 8080
-ENV PORT 8080
-CMD ["php-fpm"]
