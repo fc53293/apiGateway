@@ -11,23 +11,23 @@ spec:
   template:
     metadada:
       labels:
-	app: apigateway
-  spec:
-    containers:
-      - name: apigateway
-    	image: gcr.io/projetoptiptr-307918/apigateway:v1
-	imagePullPolicy: IfNotPresent
-	ports:
-	  - containerPort: 80
-        livenessProbe:
-          httpGet:
-             path: /healtz
-             port: 80
-          initialDelaySeconds: 3
-          periodSeconds: 3
-        readinessProbe:
-          httpGet:
-             path: /healthz
-             port: 80
-          initialDelaySeconds: 3
-          periodSeconds: 3
+        app: apigateway
+    spec:
+      containers:
+        - name: apigateway
+          image: gcr.io/projetoptiptr-307918/apigateway:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          livenessProbe:
+            httpGet:
+              path: /healtz
+              port: 80
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 3
