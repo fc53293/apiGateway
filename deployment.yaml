@@ -13,8 +13,7 @@ spec:
         app: apigateway
     spec:
       containers:
-      	- name: apigateway
-          image: gcr.io/projetoptiptr-307918/apigateway:v1
-          ports:
-	  - name: http
-          - containerPort: 80
+      - name: apigateway
+        image: gcr.io/projetoptiptr-307918/apigateway:v1
+        ports:
+        - containerPort: 80
