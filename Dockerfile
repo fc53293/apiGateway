@@ -1,30 +1,73 @@
-FROM alpine:3.7
+# Alpine Image for Nginx and PHP
 
-RUN apk --no-cache add \
-php7 \
-php7-fpm \
-php7-pdo \
-php7-mbstring \
-php7-xml \
-php7-openssl \
-php7-json \
-php7-phar \
-php7-zip \
-php7-dom \
-php7-session \
-php7-zlib && \
-php7 -r "copy('http://getcomposer.org/installer', 'composer-setup.php');" && \
-php7 composer-setup.php --install-dir=/usr/bin --filename=composer && \
-php7 -r "unlink('composer-setup.php');" && \
-ln -sf /usr/bin/php7 /usr/bin/php && \
-ln -s /etc/php7/php.ini /etc/php7/conf.d/php.ini
+# NGINX x ALPINE.
+FROM nginx:1.17.5-alpine
 
-RUN set -x \
-addgroup -g 82 -S www-data \
-adduser -u 82 -D -S -G www-data www-data
+# INSTALL SOME SYSTEM PACKAGES.
+RUN apk --update --no-cache add ca-certificates \
+    bash \
+    supervisor
 
-COPY . /src
-ADD .env.example /src/.env
-WORKDIR /src
-RUN chmod -R 777 storage
-CMD php -S 0.0.0.0:8000 -t public
+# trust this project public key to trust the packages.
+ADD https://dl.bintray.com/php-alpine/key/php-alpine.rsa.pub /etc/apk/keys/php-alpine.rsa.pub
+
+# CONFIGURE ALPINE REPOSITORIES AND PHP BUILD DIR.
+ARG PHP_VERSION=7.3
+ARG ALPINE_VERSION=3.9
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/v${ALPINE_VERSION}/main" > /etc/apk/repositories && \
+    echo "http://dl-cdn.alpinelinux.org/alpine/v${ALPINE_VERSION}/community" >> /etc/apk/repositories && \
+    echo "https://dl.bintray.com/php-alpine/v${ALPINE_VERSION}/php-${PHP_VERSION}" >> /etc/apk/repositories
+
+# INSTALL PHP AND SOME EXTENSIONS. SEE: https://github.com/codecasts/php-alpine
+RUN apk add --no-cache --update php-fpm \
+    php \
+    php-openssl \
+    php-pdo \
+    php-pdo_mysql \
+    php-mbstring \
+    php-phar \
+    php-session \
+    php-dom \
+    php-ctype \
+    php-zlib \
+    php-json \
+    php-curl \
+    php-xml && \
+    ln -s /usr/bin/php7 /usr/bin/php
+
+# CONFIGURE WEB SERVER.
+RUN mkdir -p /var/www && \
+    mkdir -p /run/php && \
+    mkdir -p /run/nginx && \
+    mkdir -p /var/log/supervisor && \
+    mkdir -p /etc/nginx/sites-enabled && \
+    mkdir -p /etc/nginx/sites-available && \
+    rm /etc/nginx/nginx.conf && \
+    rm /etc/php7/php-fpm.d/www.conf && \
+    rm /etc/php7/php.ini
+
+# INSTALL COMPOSER.
+COPY --from=composer:1.10 /usr/bin/composer /usr/bin/composer
+
+# ADD START SCRIPT, SUPERVISOR CONFIG, NGINX CONFIG AND RUN SCRIPTS.
+ADD start.sh /start.sh
+ADD config/supervisor/supervisord.conf /etc/supervisord.conf
+ADD config/nginx/nginx.conf /etc/nginx/nginx.conf
+ADD config/nginx/site.conf /etc/nginx/sites-available/default.conf
+ADD config/php/php.ini /etc/php7/php.ini
+ADD config/php-fpm/www.conf /etc/php7/php-fpm.d/www.conf
+RUN chmod 755 /start.sh
+
+# EXPOSE PORTS!
+ARG NGINX_HTTP_PORT=80
+ARG NGINX_HTTPS_PORT=443
+EXPOSE ${NGINX_HTTPS_PORT} ${NGINX_HTTP_PORT}
+
+# SET THE WORK DIRECTORY.
+WORKDIR /var/www
+
+# KICKSTART!
+CMD ["/start.sh"]
+
+COPY . /var/www/
+RUN chmod -Rf 777 /var/www/storage/
