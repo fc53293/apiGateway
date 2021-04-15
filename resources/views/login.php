@@ -61,10 +61,16 @@
               </a>
             </small>
           </div>
-            <button type="submit" class="m-5 btn btn-primary btn-lg btn-block">Sign in</button>
+             <button type="submit" class="m-5 btn btn-primary btn-lg btn-block">Sign in</button> 
           </div>
+
+    
+            <a href="http://microInquilino.default.svc.cluster.local:8081/inquilino"> Quero ir para aqui </a>
+            
       </form>
     </div>
+
+    
   </div>
   <!-- END Banner -->
 
