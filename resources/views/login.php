@@ -65,7 +65,16 @@
           </div>
 
     
-            <a href="http://microInquilino.default.svc.cluster.local:8081/inquilino"> Quero ir para aqui </a>
+            <a href="http://microinquilino.default.svc.apigateway-cluster:8081/inquilino"> Quero ir para aqui  1 </a> <br>
+
+            <a href="http://microinquilino.default.svc.apigateway-cluster:8081"> Quero ir para aqui  2 </a> <br>
+            
+
+            <a href="http://microinquilino-deployment.default.svc.apigateway-cluster:8081/inquilino"> Quero ir para aqui  3 </a><br>
+
+            <a href="http://microinquilino-deployment.default.svc.apigateway-cluster:8081"> Quero ir para aqui 4 </a><br>
+            
+
             
       </form>
     </div>
