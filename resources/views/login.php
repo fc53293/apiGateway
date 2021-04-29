@@ -65,27 +65,22 @@
           </div>
            
 
-              <?php
+          <?php 
+                
+                //curl_exec($ch);
 
-              //Initialize the cURL session
-              $ch = curl_init("http://microinquilino-deployment:8081/");
+                $defaults = array(
+                  CURLOPT_URL => 'http://microinquilino-deployment:8081/',
+                  CURLOPT_POST => true,
+                );
 
-              //Return the page content
-              curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                $ch = curl_init();
 
-              //Remove the header information from the output
-              curl_setopt($ch, CURLOPT_HEADER, 0);
+                curl_setopt_array($ch, $defaults);
 
-              //Execute the cURL session
-              $result = curl_exec($ch);
-
-              //Print the returned value of the website
-              echo $result;
-
-              //Close the cURL session
-              curl_close($ch);
-
-              ?>
+                echo curl_exec($ch);
+                
+            ?>
           
       </form>
     </div>
