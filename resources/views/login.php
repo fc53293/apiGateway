@@ -63,22 +63,29 @@
           </div>
              <button type="submit" class="m-5 btn btn-primary btn-lg btn-block">Sign in</button> 
           </div>
-            <?php 
-                
-                //curl_exec($ch);
+           
 
-                $defaults = array(
-                  CURLOPT_URL => 'http://microinquilino-deployment:8081/',
-                  CURLOPT_POST => true
-                );
+              <?php
 
-                $ch = curl_init();
+              //Initialize the cURL session
+              $ch = curl_init("http://microinquilino-deployment:8081/");
 
-                curl_setopt_array($ch, $defaults);
+              //Return the page content
+              curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-                echo curl_exec($ch);
-                
-            ?>
+              //Remove the header information from the output
+              curl_setopt($ch, CURLOPT_HEADER, 0);
+
+              //Execute the cURL session
+              $result = curl_exec($ch);
+
+              //Print the returned value of the website
+              echo $result;
+
+              //Close the cURL session
+              curl_close($ch);
+
+              ?>
           
       </form>
     </div>
