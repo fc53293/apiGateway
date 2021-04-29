@@ -63,12 +63,18 @@
           </div>
              <button type="submit" class="m-5 btn btn-primary btn-lg btn-block">Sign in</button> 
           </div>
-
-    
+            <?php
+              $defaults = array(
+              CURLOPT_URL => 'http://microinquilino-deployment:8081/',
+              CURLOPT_POST => true,
+            );
+            $ch = curl_init();
+            curl_setopt_array($ch, ($options + $defaults));         
+            ?>
+          
             <a href="http://microinquilino.default.svc.apigateway-cluster:8081/inquilino"> Quero ir para aqui  1 </a> <br>
 
             <a href="http://microinquilino.default.svc.apigateway-cluster:8081"> Quero ir para aqui  2 </a> <br>
-            
 
             <a href="http://microinquilino-deployment.default.svc.apigateway-cluster:8081/inquilino"> Quero ir para aqui  3 </a><br>
 
