@@ -65,22 +65,24 @@
           </div>
            
 
-          <?php 
-                
-                //curl_exec($ch);
+          <?php
 
-                $defaults = array(
-                  CURLOPT_URL => 'http://microinquilino-deployment:8081/',
-                  CURLOPT_POST => true,
-                );
+          //Define the array of options
+          $defaults = array(
+          CURLOPT_URL => 'http://example.com/',
+          CURLOPT_POST => true
+          );
 
-                $ch = curl_init();
+          //Initialize the cURL session
+          $ch = curl_init();
 
-                curl_setopt_array($ch, $defaults);
+          //Return the page content based on option array
+          curl_setopt_array($ch, $defaults);
 
-                echo curl_exec($ch);
-                
-            ?>
+          //Print the returned value
+          echo curl_exec($ch);
+
+          ?>
           
       </form>
     </div>
