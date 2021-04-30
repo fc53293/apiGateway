@@ -72,8 +72,10 @@
 
                 //Return the page content
                 curl_setopt($ch, CURLOPT_URL, "http://microinquilino-deployment:8081/");
-
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_HEADER, 1);
                 curl_exec($ch);
+              
                 curl_close($ch);
 
 
