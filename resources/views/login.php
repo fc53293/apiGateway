@@ -73,21 +73,10 @@
                 //Return the page content
                 curl_setopt($ch, CURLOPT_URL, "http://microinquilino-deployment:8081/");
 
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-                //Remove the header information from the output
-                curl_setopt($ch, CURLOPT_HEADER, 0);
-
-                curl_setopt($ch, CURLOPT_POST, TRUE);
-
-                //Execute the cURL session
                 curl_exec($ch);
-
-                //Print the returned value of the website
-                //echo $result;
-
-                //Close the cURL session
                 curl_close($ch);
+
+
 
                 ?>
           
