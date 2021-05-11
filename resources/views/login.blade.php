@@ -47,13 +47,13 @@
   <div class="banner-image w-100 vh-100 d-flex justify-content-center align-items-center">
     <div class="content text-center">
       <h1 class="m-5 blue-font">Sign In</h1>    
-      <form action="#">
+      <form action="{{url('/entra')}}" type="get">
         <div class="form-floating mb-4">
-          <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+          <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="ola">
           <label for="floatingInput">Email address</label>
         </div>
           <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="ola2">
             <label for="floatingPassword">Password</label>
             <small id="emailHelp" class="form-text text-muted nav-link">
               <a id="forgot-psswd" href="">

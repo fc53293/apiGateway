@@ -48,6 +48,12 @@ class apiGatewayController extends Controller
         $results = DB::select("SELECT * FROM artigos");
         return response()->json($results);
     }
+
+    public function entra()
+    {
+        $results = DB::select("SELECT * FROM utilizadores");
+        return response()->json($results);
+    }
 }
 
 
