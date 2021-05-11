@@ -61,10 +61,31 @@
               </a>
             </small>
           </div>
-            <button type="submit" class="m-5 btn btn-primary btn-lg btn-block">Sign in</button>
+             <button type="submit" class="m-5 btn btn-primary btn-lg btn-block">Sign in</button> 
           </div>
+           
+
+              <?php
+
+                //Initialize the cURL session
+                $ch = curl_init();
+
+                //Return the page content
+                curl_setopt($ch, CURLOPT_URL, "http://microinquilino-deployment:8081/");
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_HEADER, 1);
+                curl_exec($ch);
+              
+                curl_close($ch);
+
+
+
+                ?>
+          
       </form>
     </div>
+
+    
   </div>
   <!-- END Banner -->
 
