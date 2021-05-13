@@ -6,6 +6,7 @@ use App\routes\web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Artigo;
+use App\Models\Utilizador;
 
 class apiGatewayController extends Controller
 {
@@ -49,11 +50,22 @@ class apiGatewayController extends Controller
         return response()->json($results);
     }
 
-    public function entra()
+    public function showCurrentUser(Request $request)
     {
-        $results = DB::select("SELECT * FROM utilizadores");
-        return response()->json($results);
-    }
+        
+    
+            
+
+        //Initialize the cURL session
+        $ch = curl_init();
+
+        //Return the page content
+        curl_setopt($ch, CURLOPT_URL, "http://microinquilino-deployment:8081/");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 1);
+        curl_exec($ch);
+        
+        curl_close($ch);
 }
 
 

@@ -30,7 +30,7 @@ $router->group(['prefix' => 'api'], function($router)
 
 Route::get('/signin', 'apiGatewayController@showSigninPage');
 
-Route::get('/entra', 'apiGatewayController@entra');
+Route::get('/login', 'apiGatewayController@showCurrentUser');
 
 Route::get('/signup', 'apiGatewayController@showSignupPage');
 

@@ -14,6 +14,15 @@
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>  
+  <script src="https://www.gstatic.com/firebasejs/8.6.0/firebase.js"></script>
+        <script>
+        var config = {
+            apiKey: "AIzaSyD8o4OnimxIsq-3B7e05FeBj5qUq65HTXA",
+            authDomain: "projetoptiptr-307918.firebaseapp.com",
+        };
+        firebase.initializeApp(config);
+        </script>
+
 </head>
 
 <body>
@@ -47,13 +56,13 @@
   <div class="banner-image w-100 vh-100 d-flex justify-content-center align-items-center">
     <div class="content text-center">
       <h1 class="m-5 blue-font">Sign In</h1>    
-      <form action="{{url('/entra')}}" type="get">
+      <form action="{{url('/login')}}" type="get" id="formsubmit">
         <div class="form-floating mb-4">
-          <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="ola">
+          <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" required>
           <label for="floatingInput">Email address</label>
         </div>
           <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="ola2">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required>
             <label for="floatingPassword">Password</label>
             <small id="emailHelp" class="form-text text-muted nav-link">
               <a id="forgot-psswd" href="">
@@ -61,31 +70,44 @@
               </a>
             </small>
           </div>
-             <button type="submit" class="m-5 btn btn-primary btn-lg btn-block">Sign in</button> 
+             <button type="button" id="botaoLogin" onclick="confirmation();" class="m-5 btn btn-primary btn-lg btn-block">Sign in</button> 
           </div>
-           
-
-              <?php
-
-                //Initialize the cURL session
-                $ch = curl_init();
-
-                //Return the page content
-                curl_setopt($ch, CURLOPT_URL, "http://microinquilino-deployment:8081/");
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_HEADER, 1);
-                curl_exec($ch);
-              
-                curl_close($ch);
+          <script>
+            function confirmation(){
 
 
+              var email = document.getElementById("floatingInput").value;
+              var password = document.getElementById("floatingPassword").value;
+            
+              firebase.auth().onAuthStateChanged(function(user) {
+              if (user) {
+                alert ('Supostamente estou registado');
+                document.getElementById('formsubmit').submit();
+              } else {
+                alert ('Supostamente não estou registado');
+                return false;
+              }
+              });
 
-                ?>
-          
+              firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+                alert ('Nao fiz login');
+                return false;
+              });
+
+
+            }
+            
+          </script>    
       </form>
     </div>
 
     
+
+
+    
+
+
+
   </div>
   <!-- END Banner -->
 
