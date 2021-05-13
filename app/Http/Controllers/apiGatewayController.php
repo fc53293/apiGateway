@@ -59,7 +59,9 @@ class apiGatewayController extends Controller
         //Return the page content
         
         curl_setopt($ch, CURLOPT_URL, "http://microinquilino-deployment:8081/");
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
         $result = curl_exec($ch);
     
 
