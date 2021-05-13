@@ -54,15 +54,17 @@ class apiGatewayController extends Controller
     {
         
         //Initialize the cURL session
-        $ch = curl_init("http://microinquilino-deployment:8081/");
+        $ch = curl_init();
 
         //Return the page content
-        curl_setopt($ch, CURLOPT_POST, 1);
-        $result = curl_exec($ch);
         
-        echo $result;
+        curl_setopt($ch, CURLOPT_URL, "http://microinquilino-deployment:8081/");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($ch);
+    
 
         curl_close($ch);
+        return $result;
     }
 
 }
