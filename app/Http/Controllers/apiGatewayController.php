@@ -61,6 +61,7 @@ class apiGatewayController extends Controller
 
         //Return the page content
         curl_setopt($ch, CURLOPT_HEADER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
         $result = curl_exec($ch);
         
         echo $result;
