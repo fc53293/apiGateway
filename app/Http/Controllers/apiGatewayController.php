@@ -53,8 +53,17 @@ class apiGatewayController extends Controller
     public function showCurrentUser(Request $request)
     {
         
-        header("Location: http://microinquilino-deployment:8081/", true, 301);
-        exit();
+        //Initialize the cURL session
+        $ch = curl_init();
+
+        //Return the page content
+        
+        curl_setopt($ch, CURLOPT_URL, "http://microinquilino-deployment:8081/");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+        $result = curl_exec($ch);
+
+        return $result;
     }
 
 }
