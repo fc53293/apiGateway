@@ -66,7 +66,7 @@ class apiGatewayController extends Controller
         curl_exec($ch);
         
         curl_close($ch);
+    }
+
 }
-
-
 ?>
