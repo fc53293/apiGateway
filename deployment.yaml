@@ -48,7 +48,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: service
+  name: apigateway
 spec:
   selector:
     app: apigateway
@@ -74,7 +74,7 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: service
+              serviceName: apigateway
               servicePort: 8080
 ---
 #BackendConfig

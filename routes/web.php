@@ -35,3 +35,4 @@ Route::get('/login', 'apiGatewayController@showCurrentUser');
 Route::get('/signup', 'apiGatewayController@showSignupPage');
 
 Route::get('signin2', 'apiGatewayController@mostraArtigos');
+
