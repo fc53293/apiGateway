@@ -30,5 +30,5 @@ Route::get('/signup', 'apiGatewayController@showSignupPage');
 Route::get('signin2', 'apiGatewayController@mostraArtigos');
 
 
-Route::get('/payment', 'apiGatewayController@showPayment');
+Route::get('payment', 'apiGatewayController@showPayment');
 
