@@ -43,7 +43,7 @@ class apiGatewayController extends Controller
 
         //Return the page content
         
-        curl_setopt($ch, CURLOPT_URL, "http://microinquilino-service:8081/payment");
+        curl_setopt($ch, CURLOPT_URL, "microinquilino-service:8081/payment");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
         
         curl_exec($ch);
