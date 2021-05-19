@@ -32,5 +32,5 @@ Route::get('home', 'apiGatewayController@showHome');
 
 Route::get('payment', 'apiGatewayController@showPayment');
 
-Route::get('inquilinoProfile/', 'apiGatewayController@showPayment');
+Route::get('inquilinoProfile/1', 'apiGatewayController@showInquilinoProfile');
 
