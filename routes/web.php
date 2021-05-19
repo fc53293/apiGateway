@@ -21,13 +21,6 @@ $router->get('/', function (){
 });
 
 
-$router->group(['prefix' => 'api'], function($router)
-{
-    $router->post('artigo/add','apiGatewayController@createArtigo');
-    $router->get('artigo/all','apiGatewayController@allArtigos');
-    
-}); 
-
 Route::get('/signin', 'apiGatewayController@showSigninPage');
 
 Route::get('/login', 'apiGatewayController@showCurrentUser');
@@ -35,4 +28,7 @@ Route::get('/login', 'apiGatewayController@showCurrentUser');
 Route::get('/signup', 'apiGatewayController@showSignupPage');
 
 Route::get('signin2', 'apiGatewayController@mostraArtigos');
+
+
+Route::get('/payment', 'apiGatewayController@showPayment');
 

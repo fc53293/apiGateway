@@ -20,29 +20,36 @@ class apiGatewayController extends Controller
         return view('register');
     }
 
-    public function allArtigos()
-    {
-        $inquilino = Artigo::all();
-        //$inquilino = $this->model->all();
 
-        return response()->json($inquilino);
+    public function showHome()
+    {
+        //Initialize the cURL session
+        $ch = curl_init();
+
+        //Return the page content
         
-        //return response()->json('Mostra todas os inquilinos');
+        curl_setopt($ch, CURLOPT_URL, "microinquilino-service:8081/");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
         
+        curl_exec($ch);
+
+        curl_close($ch);
     }
 
-    public function createArtigo(Request $request)
+    public function showPayment()
     {
-        print_r($request->input());
-        $order = new Artigo;
-        $order->email=$request->input('email');
-        $order->id=$request->input('description');
-        $order->save();
-       //$inquilino = Inquilino::create($request->all());
+        //Initialize the cURL session
+        $ch = curl_init();
 
-       //return response()->json($inquilino);
+        //Return the page content
+        
+        curl_setopt($ch, CURLOPT_URL, "microinquilino-service:8081/payment");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+        
+        curl_exec($ch);
+
+        curl_close($ch);
     }
-
 
     public function mostraArtigos()
     {
