@@ -43,18 +43,12 @@ class apiGatewayController extends Controller
 
         //Return the page content
         
-        curl_setopt($ch, CURLOPT_URL, "microinquilino-service:8081/payment");
+        curl_setopt($ch, CURLOPT_URL, "http://microinquilino-deployment:8081/payment");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
         
         curl_exec($ch);
 
         curl_close($ch);
-    }
-
-    public function mostraArtigos()
-    {
-        $results = DB::select("SELECT * FROM artigos");
-        return response()->json($results);
     }
 
     public function showCurrentUser(Request $request)
@@ -65,7 +59,7 @@ class apiGatewayController extends Controller
 
         //Return the page content
         
-        curl_setopt($ch, CURLOPT_URL, "microinquilino-service:8081/");
+        curl_setopt($ch, CURLOPT_URL, "http://microinquilino-deployment:8081/");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
         
         curl_exec($ch);
