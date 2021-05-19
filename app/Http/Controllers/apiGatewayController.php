@@ -59,7 +59,7 @@ class apiGatewayController extends Controller
 
         //Return the page content
         
-        curl_setopt($ch, CURLOPT_URL, "http://microinquilino-service.default.svc.cluster.local/");
+        curl_setopt($ch, CURLOPT_URL, "http://microinquilino-service:8081/");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
         
         curl_exec($ch);
