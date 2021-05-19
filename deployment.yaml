@@ -78,9 +78,8 @@ spec:
               serviceName: service
               servicePort: 8080
 ---
-
 #Managed Certs
-apiVersion: networking.gke.io/v1beta1
+apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
 metadata:
   name: certificadogrupo07
@@ -88,6 +87,7 @@ spec:
   domains:
     - myunirent.pt
 ---
+
 #BackendConfig
 apiVersion: cloud.google.com/v1
 kind: BackendConfig
