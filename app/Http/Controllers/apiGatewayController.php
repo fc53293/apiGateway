@@ -51,21 +51,6 @@ class apiGatewayController extends Controller
         curl_close($ch);
     }
 
-    public function showCurrentUser(Request $request)
-    {
-        
-        //Initialize the cURL session
-        $ch = curl_init();
-
-        //Return the page content
-        
-        curl_setopt($ch, CURLOPT_URL, "http://microinquilino-service:8081/");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
-        
-        curl_exec($ch);
-
-        curl_close($ch);
-    }
 
     public function showCurrentUser(Request $request)
     {
