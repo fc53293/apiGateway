@@ -67,6 +67,7 @@ metadata:
   name: ingress
   annotations:
     kubernetes.io/ingress.global-static-ip-name: myunirent-ip
+    networking.gke.io/managed-certificates: certificadogrupo07
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
   rules:
@@ -76,6 +77,16 @@ spec:
           - backend:
               serviceName: service
               servicePort: 8080
+---
+
+#Managed Certs
+apiVersion: networking.gke.io/v1beta1
+kind: ManagedCertificate
+metadata:
+  name: certificadogrupo07
+spec:
+  domains:
+    - myunirent.pt
 ---
 #BackendConfig
 apiVersion: cloud.google.com/v1
