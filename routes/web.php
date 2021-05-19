@@ -27,10 +27,10 @@ Route::get('/login', 'apiGatewayController@showCurrentUser');
 
 Route::get('/signup', 'apiGatewayController@showSignupPage');
 
-Route::get('signin2', 'apiGatewayController@mostraArtigos');
 
+Route::get('home', 'apiGatewayController@showHome');
 
 Route::get('payment', 'apiGatewayController@showPayment');
 
-Route::get('home', 'apiGatewayController@showHome');
+Route::get('inquilinoProfile/', 'apiGatewayController@showPayment');
 
