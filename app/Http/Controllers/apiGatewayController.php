@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use App\Models\Artigo;
 use App\Models\Inquilino;
 use App\Models\Utilizador;
-Use Carbon\Carbon;
 
 class apiGatewayController extends Controller
 {
@@ -69,18 +68,7 @@ class apiGatewayController extends Controller
 
     public function renovarAluguerInquilino(Request $req, $id)
     {
-        $opcaoMeses = $req->input('renovarMeses1');
-        $userLoged = 1;
- 
-        $rent = Inquilino::where('IdUser', $id)
-        // $rent->FimContrato=Carbon::now()->addMonths(6);
-        // $rent->save();
-       ->update([
-           'FimContrato' => Carbon::now()->addMonthsNoOverflow(6)
-        ]);
-        $rentDateInfo = Inquilino::where('IdUser',$id)->value('FimContrato');
-        $result = Carbon::createFromFormat('Y-m-d H:i:s', $rentDateInfo)->isPast();
-        return response()->json(['rentCheck'=>$result]);
+        return response()->json('Cheguei aqui');
     }
 
     public function showPayment()
