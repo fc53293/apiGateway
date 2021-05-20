@@ -218,87 +218,6 @@ class apiGatewayController extends Controller
     }
 
 
-    public function showCurrentUser(Request $request)
-    {
-        
-        $email = $request->input('email');
-        $password = $request->input('password');
-
-        $user = Utilizador::where('Email', $email)->get();
-        foreach($user as $infoUser){
-            $tipoconta = $infoUser->TipoConta;
-        }
-
-        echo $tipoconta;
-        
-        if ($tipoconta = "Inquilino"){
-            
-
-            $ch = curl_init();
-
-            //Return the page content
-        
-            curl_setopt($ch, CURLOPT_URL, "http://microinquilino-service:8081/");
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
-        
-            curl_exec($ch);
-
-            curl_close($ch);
-
-
-
-            
-        } else if ($tipoconta = "Senhorio") {
-
-            
-
-            //Initialize the cURL session
-            $ch = curl_init();
-
-            //Return the page content
-            curl_setopt($ch, CURLOPT_URL, "http://microsenhorio-service:8083/");
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
-            curl_exec($ch);
-          
-            curl_close($ch);
-
-
-
-            
-
-        } else if ($tipoconta = "Interessado") {
-
-            echo "Estou a chegar ao sitio certo";
-
-            //Initialize the cURL session
-            $ch = curl_init();
-
-            //Return the page content
-            curl_setopt($ch, CURLOPT_URL, "http://microinteressado-service:8082/");
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
-            curl_exec($ch);
-          
-            curl_close($ch);
-
-
-
-           
-
-        }
-        //return response()->json($user);
-    }
-
-
-
-
-
-
-
-
-
-
-
-    // ****************************************** MICRO INTERESSADO  *********************************
 
     public function showHomeInteressado()
     {
@@ -307,7 +226,7 @@ class apiGatewayController extends Controller
 
         //Return the page content
         
-        curl_setopt($ch, CURLOPT_URL, "http://microinteressado-service:8082/");
+        curl_setopt($ch, CURLOPT_URL, "http://microinteressado-service:8082/homeInteressado");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
         
         curl_exec($ch);
@@ -340,13 +259,90 @@ class apiGatewayController extends Controller
 
         //Return the page content
         
-        curl_setopt($ch, CURLOPT_URL, "http://microinteressado-service:8082/wallet/2");
+        curl_setopt($ch, CURLOPT_URL, "http://microinteressado-service:8082/walletInteressado/2");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
         
         curl_exec($ch);
 
         curl_close($ch);
     }
+
+    public function showCurrentUser(Request $request)
+    {
+        
+        $email = $request->input('email');
+        $password = $request->input('password');
+        echo $email;
+        $tipoconta = Utilizador::where('Email', $email)->get()->value("TipoConta");
+
+        echo $tipoconta;
+        
+        if ($tipoconta == "Inquilino"){
+            
+            echo "Estou a chegar ao sitio certo inquilino";
+            $ch = curl_init();
+
+            //Return the page content
+        
+            curl_setopt($ch, CURLOPT_URL, "http://microinquilino-service:8081/");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+        
+            curl_exec($ch);
+
+            curl_close($ch);
+
+
+
+            
+        } else if ($tipoconta == "Senhorio") {
+
+            
+
+            //Initialize the cURL session
+            $ch = curl_init();
+
+            //Return the page content
+            curl_setopt($ch, CURLOPT_URL, "http://microsenhorio-service:8083/");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+            curl_exec($ch);
+          
+            curl_close($ch);
+
+
+
+            
+
+        } else if ($tipoconta == "Interessado") {
+
+            echo "Estou a chegar ao sitio certo";
+
+            //Initialize the cURL session
+            $ch = curl_init();
+
+            //Return the page content
+            curl_setopt($ch, CURLOPT_URL, "http://microinteressado-service:8082/homeInteressado");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+            curl_exec($ch);
+          
+            curl_close($ch);
+
+        }
+        //return response()->json($user);
+    }
+
+
+
+
+
+
+
+
+
+
+
+    // ****************************************** MICRO INTERESSADO  *********************************
+
+    
 
 
 

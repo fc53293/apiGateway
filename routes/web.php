@@ -56,8 +56,6 @@ Route::post('pay', 'apiGatewayController@pagarRenda');
 
 
 
-// ********************** MICRO INTERESSADO ************************
-
 
 Route::get('homeInteressado', 'apiGatewayController@showHomeInteressado');
 
