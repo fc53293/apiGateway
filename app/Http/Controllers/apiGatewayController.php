@@ -20,6 +20,11 @@ class apiGatewayController extends Controller
         return view('register');
     }
 
+    public function showSignupSenhorio()
+    {
+        return view('registerSenhorio');
+    }
+
 
     public function showHome()
     {
@@ -35,6 +40,51 @@ class apiGatewayController extends Controller
 
         curl_close($ch);
     }
+    
+    public function createNewUser(Request $request)
+    {
+
+        $user = new Utilizador();
+        $user->Username=$request->input('username');
+        $user->Email=$request->input('mail');
+        $user->Password=$request->input('pass');
+        $user->PrimeiroNome=$request->input('firstName');
+        $user->UltimoNome=$request->input('lastName');
+        $user->Nacionalidade=$request->input('nacionalidade');
+        $user->Nascimento=$request->input('nascimento');
+        $user->Morada=$request->input('morada');
+        $user->Telefone=$request->input('movel');
+        $user->TipoConta="Interessado";
+        $user->Saldo=0;
+        $user->imagem="null.png";
+        $user->api_Token="f8d16f8c-80c8-459e-abc5-2086811cc255";
+        $user->save();
+        return response()->json(['User'=>$user]);
+        //Initialize the cURL session
+    }
+
+    public function createNewSenhorio(Request $request)
+    {
+
+        $user = new Utilizador();
+        $user->Username=$request->input('username');
+        $user->Email=$request->input('mail');
+        $user->Password=$request->input('pass');
+        $user->PrimeiroNome=$request->input('firstName');
+        $user->UltimoNome=$request->input('lastName');
+        $user->Nacionalidade=$request->input('nacionalidade');
+        $user->Nascimento=$request->input('nascimento');
+        $user->Morada=$request->input('morada');
+        $user->Telefone=$request->input('movel');
+        $user->TipoConta="Senhorio";
+        $user->Saldo=0;
+        $user->imagem="null.png";
+        $user->api_Token="f8d16f8c-80c8-459e-abc5-2086811cc255";
+        $user->save();
+        return response()->json(['User'=>$user]);
+        //Initialize the cURL session
+    }
+
 
     public function showInquilinoProfile()
     {

@@ -34,7 +34,12 @@ Route::get('home', 'apiGatewayController@showHome');
 
 Route::get('payment', 'apiGatewayController@showPayment');
 
+Route::get('registerSenhorio', 'apiGatewayController@showSignupSenhorio');
+
 Route::get('inquilinoProfile/{id}', 'apiGatewayController@showInquilinoProfile');
 
 Route::post('edit/{id}', 'apiGatewayController@updateInquilinoProfile');
 
+Route::post('/createUser', 'apiGatewayController@createNewUser');
+
+Route::post('/createSenhorio', 'apiGatewayController@createNewSenhorio');

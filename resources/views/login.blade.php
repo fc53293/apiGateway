@@ -83,7 +83,7 @@
                 alert ('Bem vindo !');
                 document.getElementById('formsubmit').submit();
               } else {
-                alert ('Inseriu dados incorretos !');
+                
                 return false;
               }
               });
