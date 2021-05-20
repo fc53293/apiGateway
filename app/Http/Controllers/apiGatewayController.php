@@ -51,14 +51,14 @@ class apiGatewayController extends Controller
         curl_close($ch);
     }
 
-    public function updateInquilinoProfile()
+    public function updateInquilinoProfile($id)
     {
         //Initialize the cURL session
         $ch = curl_init();
 
         //Return the page content
         
-        curl_setopt($ch, CURLOPT_URL, "http://microinquilino-service:8081/edit/1");
+        curl_setopt($ch, CURLOPT_URL, "http://microinquilino-service:8081/edit/$id");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
         
         curl_exec($ch);
