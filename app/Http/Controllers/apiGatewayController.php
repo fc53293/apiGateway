@@ -268,7 +268,7 @@ class apiGatewayController extends Controller
 
         } else if ($tipoconta = "Interessado") {
 
-            
+            echo "Estou a chegar ao sitio certo";
 
             //Initialize the cURL session
             $ch = curl_init();
