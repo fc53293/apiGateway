@@ -159,7 +159,7 @@ class apiGatewayController extends Controller
         $user->IdInquilino=1;
         $user->IdSenhorio=2;
         $user->Valor=$request->Valor;
-        $user->Data=$request->Data;
+        $user->Data=Carbon::now();
         $user->Contribuinte=$request->Contribuinte;
         $user->save();
         // $data = array('IdPagamento' =>1,'IdInquilino' => 1, 'IdSenhorio' => 2, 'Valor' => 400, 'Data' => '2021-04-05 20:26:02', 'Contribuinte' => "222222222");
