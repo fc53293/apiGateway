@@ -51,19 +51,18 @@ class apiGatewayController extends Controller
         curl_close($ch);
     }
 
-    public function updateInquilinoProfile($id)
+    public function updateInquilinoProfile(Request $req, $id)
     {
-        //Initialize the cURL session
-        $ch = curl_init();
-
-        //Return the page content
+        $data = Utilizador::find($id);
+        $data->Username=$req->input('nomeUser');
+        $data->PrimeiroNome=$req->input('primeiroNome');
+        $data->UltimoNome=$req->input('ultimoNome');
+        $data->Email=$req->input('mail');
+        $data->Morada=$req->input('morada');
+        $data->Nascimento=$req->input('dateNascimento');
+        $data->save();
         
-        curl_setopt($ch, CURLOPT_URL, "http://microinquilino-service:8081/edit/$id");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
-        
-        curl_exec($ch);
-
-        curl_close($ch);
+        return response()->json('Updated successfully.');
     }
 
     public function showPayment()
