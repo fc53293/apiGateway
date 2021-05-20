@@ -6,7 +6,6 @@ use App\routes\web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Artigo;
-use App\Models\Inquilino;
 use App\Models\Utilizador;
 
 class apiGatewayController extends Controller
@@ -64,11 +63,6 @@ class apiGatewayController extends Controller
         $data->save();
         
         return response()->json('Updated successfully.');
-    }
-
-    public function renovarAluguerInquilino(Request $req, $id)
-    {
-        return response()->json('Cheguei aqui');
     }
 
     public function showPayment()

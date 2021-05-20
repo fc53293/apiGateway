@@ -38,5 +38,3 @@ Route::get('inquilinoProfile/{id}', 'apiGatewayController@showInquilinoProfile')
 
 Route::post('edit/{id}', 'apiGatewayController@updateInquilinoProfile');
 
-Route::post('renovar/{id}', 'apiGatewayController@renovarAluguerInquilino');
-
