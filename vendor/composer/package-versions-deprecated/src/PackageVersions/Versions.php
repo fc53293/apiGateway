@@ -72,7 +72,7 @@ final class Versions
   'illuminate/view' => 'v8.40.0@696a1d6d2213be192429e97245a3d2bb4d6d1849',
   'laravel/lumen-framework' => 'v8.2.3@6ed02d4d1a6e203b9e896bd105b2e838866f2951',
   'monolog/monolog' => '2.2.0@1cb1cde8e8dd0f70cc0fe51354a59acad9302084',
-  'nesbot/carbon' => '2.47.0@606262fd8888b75317ba9461825a24fc34001e1e',
+  'nesbot/carbon' => '2.48.0@d3c447f21072766cddec3522f9468a5849a76147',
   'nikic/fast-route' => 'v1.3.0@181d480e08d9476e61381e04a71b34dc0432e812',
   'opis/closure' => '3.6.2@06e2ebd25f2869e54a306dda991f7db58066f7f6',
   'phpoption/phpoption' => '1.7.5@994ecccd8f3283ecf5ac33254543eb0ac946d525',
@@ -144,7 +144,7 @@ final class Versions
   'sebastian/type' => '2.3.1@81cd61ab7bbf2de744aba0ea61fae32f721df3d2',
   'sebastian/version' => '3.0.2@c6c1022351a901512170118436c764e473f6de8c',
   'theseer/tokenizer' => '1.2.0@75a63c33a8577608444246075ea0af0d052e452a',
-  'laravel/lumen' => 'dev-main@e95d1e4c3c2e6daabbfaece40985835019b07f87',
+  'laravel/lumen' => 'dev-main@6e17f4d4eec1339f62b4d6d4828edaf08a16cd10',
 );
 
     private function __construct()
