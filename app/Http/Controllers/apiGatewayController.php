@@ -333,7 +333,7 @@ class apiGatewayController extends Controller
     }
 
 
-    public function showWallet()
+    public function showWalletInteressado()
     {
         //Initialize the cURL session
         $ch = curl_init();
