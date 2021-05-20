@@ -243,7 +243,7 @@ class apiGatewayController extends Controller
 
         //Return the page content
         
-        curl_setopt($ch, CURLOPT_URL, "http://microinteressado-service:8082/inquilinoInteressado/2");
+        curl_setopt($ch, CURLOPT_URL, "http://microinteressado-service:8082/interessadoProfile/2");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
         
         curl_exec($ch);
@@ -272,7 +272,6 @@ class apiGatewayController extends Controller
         
         $email = $request->input('email');
         $password = $request->input('password');
-        echo $email;
         $tipoconta = Utilizador::where('Email', $email)->value("TipoConta");
 
         echo $tipoconta;
