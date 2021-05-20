@@ -51,6 +51,21 @@ class apiGatewayController extends Controller
         curl_close($ch);
     }
 
+    public function updateInquilinoProfile()
+    {
+        //Initialize the cURL session
+        $ch = curl_init();
+
+        //Return the page content
+        
+        curl_setopt($ch, CURLOPT_URL, "http://microinquilino-service:8081/edit/1");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+        
+        curl_exec($ch);
+
+        curl_close($ch);
+    }
+
     public function showPayment()
     {
         //Initialize the cURL session
@@ -69,7 +84,7 @@ class apiGatewayController extends Controller
 
     public function showCurrentUser(Request $request)
     {
-        
+        "
         $email = $request->input('email');
         $password = $request->input('password');
 

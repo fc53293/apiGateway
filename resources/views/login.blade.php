@@ -101,12 +101,6 @@
       </form>
     </div>
 
-    
-
-
-    
-
-
 
   </div>
   <!-- END Banner -->
