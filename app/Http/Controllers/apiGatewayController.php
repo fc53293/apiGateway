@@ -84,7 +84,7 @@ class apiGatewayController extends Controller
 
     public function showCurrentUser(Request $request)
     {
-        "
+        
         $email = $request->input('email');
         $password = $request->input('password');
 
