@@ -273,7 +273,7 @@ class apiGatewayController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
         echo $email;
-        $tipoconta = Utilizador::where('Email', $email)->get()->value("TipoConta");
+        $tipoconta = Utilizador::where('Email', $email)->value("TipoConta");
 
         echo $tipoconta;
         
