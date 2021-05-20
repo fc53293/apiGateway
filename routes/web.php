@@ -43,3 +43,13 @@ Route::post('edit/{id}', 'apiGatewayController@updateInquilinoProfile');
 Route::post('/createUser', 'apiGatewayController@createNewUser');
 
 Route::post('/createSenhorio', 'apiGatewayController@createNewSenhorio');
+Route::post('renovar/{id}', 'apiGatewayController@renovarAluguerInquilino');
+
+Route::get('payment', 'apiGatewayController@showPayments');
+
+Route::get('wallet/{id}', 'apiGatewayController@showWallet');
+
+Route::post('walletAdd/{id}', 'apiGatewayController@addMoney');
+
+Route::post('pay', 'apiGatewayController@pagarRenda');
+

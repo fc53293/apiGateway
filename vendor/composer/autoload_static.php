@@ -525,6 +525,7 @@ class ComposerStaticInitdf7d3146348a4a9f53b9c30cf685f7e7
         'App\\Jobs\\Job' => __DIR__ . '/../..' . '/app/Jobs/Job.php',
         'App\\Listeners\\ExampleListener' => __DIR__ . '/../..' . '/app/Listeners/ExampleListener.php',
         'App\\Models\\Artigo' => __DIR__ . '/../..' . '/app/Models/Artigo.php',
+        'App\\Models\\Inquilino' => __DIR__ . '/../..' . '/app/Models/Inquilino.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\Utilizador' => __DIR__ . '/../..' . '/app/Models/Utilizador.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',

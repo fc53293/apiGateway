@@ -7,6 +7,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Artigo;
 use App\Models\Utilizador;
+use App\Models\Inquilino;
+use App\Models\HistoricoSaldo;
+use App\Models\Pagamento;
+use Carbon\Carbon;
 
 class apiGatewayController extends Controller
 {
@@ -101,6 +105,71 @@ class apiGatewayController extends Controller
         curl_close($ch);
     }
 
+    public function showWallet()
+    {
+        //Initialize the cURL session
+        $ch = curl_init();
+
+        //Return the page content
+        
+        curl_setopt($ch, CURLOPT_URL, "http://microinquilino-service:8081/wallet/1");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+        
+        curl_exec($ch);
+
+        curl_close($ch);
+    }
+
+    public function showPayments()
+    {
+        //Initialize the cURL session
+        $ch = curl_init();
+
+        //Return the page content
+        
+        curl_setopt($ch, CURLOPT_URL, "http://microinquilino-service:8081/payment");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+        
+        curl_exec($ch);
+
+        curl_close($ch);
+    }
+
+    public function addMoney($id, Request $amount)
+    {
+        $user = Utilizador::find($id);
+        $user->Saldo=$amount->input('amountToAdd')+$user->Saldo;
+        $user->save();
+
+        $histSaldo = new HistoricoSaldo();
+        $user->IdSaldo=1;
+        $histSaldo->IdUser=$id;
+        $histSaldo->Username=$amount->input('nameUser');
+        $histSaldo->Valor=$amount->input('amountToAdd');
+        $histSaldo->Data=Carbon::now();
+        $histSaldo->save();
+
+        return response()->json(['res'=>$user->Saldo]);
+    }
+
+    public function pagarRenda(Request $request)
+    {
+        $user = new Pagamento();
+        //$user->IdPagamento=1;
+        $user->IdInquilino=1;
+        $user->IdSenhorio=2;
+        $user->Valor=$request->Valor;
+        $user->Data=$request->Data;
+        $user->Contribuinte=$request->Contribuinte;
+        $user->save();
+        // $data = array('IdPagamento' =>1,'IdInquilino' => 1, 'IdSenhorio' => 2, 'Valor' => 400, 'Data' => '2021-04-05 20:26:02', 'Contribuinte' => "222222222");
+        // Pagamento::create($data);  
+
+
+        return response()->json("va1");
+
+    }
+
     public function updateInquilinoProfile(Request $req, $id)
     {
         $data = Utilizador::find($id);
@@ -113,6 +182,24 @@ class apiGatewayController extends Controller
         $data->save();
         
         return response()->json('Updated successfully.');
+    }
+
+    public function renovarAluguerInquilino(Request $req, $id)
+    {
+        $opcaoMeses = $req->input('renovarMeses1');
+        $userLoged = 1;
+ 
+        $rent = Inquilino::where('IdUser', $id)
+        // $rent->FimContrato=Carbon::now()->addMonths(6);
+        // $rent->save();
+       ->update([
+           'FimContrato' => Carbon::now()->addMonthsNoOverflow(6)
+        ]);
+        $rentDateInfo = Inquilino::where('IdUser',$id)->value('FimContrato');
+        $result = Carbon::createFromFormat('Y-m-d H:i:s', $rentDateInfo)->isPast();
+        return response()->json(['rentCheck'=>$result]);
+        
+
     }
 
     public function showPayment()
