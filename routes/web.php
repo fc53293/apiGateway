@@ -67,6 +67,3 @@ Route::get('walletInteressado/{id}', 'apiGatewayController@showWalletInteressado
 
 Route::get('findPropriedadeInteressado/{idUser}', 'apiGatewayController@encontrarPropriedade');
 
-
-
-Route::post('editInteressado/{id}', 'apiGatewayController@');
