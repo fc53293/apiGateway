@@ -28,6 +28,8 @@ Route::get('/login', 'apiGatewayController@showCurrentUser');
 Route::get('/signup', 'apiGatewayController@showSignupPage');
 
 
+
+
 Route::get('home', 'apiGatewayController@showHome');
 
 Route::get('payment', 'apiGatewayController@showPayment');
@@ -35,4 +37,6 @@ Route::get('payment', 'apiGatewayController@showPayment');
 Route::get('inquilinoProfile/{id}', 'apiGatewayController@showInquilinoProfile');
 
 Route::post('edit/{id}', 'apiGatewayController@updateInquilinoProfile');
+
+Route::post('renovar/{id}', 'apiGatewayController@renovarAluguerInquilino');
 

@@ -81,10 +81,10 @@
             
               firebase.auth().onAuthStateChanged(function(user) {
               if (user) {
-                alert ('Supostamente estou registado');
+                alert ('Bem vindo !');
                 document.getElementById('formsubmit').submit();
               } else {
-                alert ('Supostamente não estou registado');
+                alert ('Inseriu dados incorretos !');
                 return false;
               }
               });
@@ -103,6 +103,5 @@
 
 
   </div>
-  <!-- END Banner -->
 
 </body>
