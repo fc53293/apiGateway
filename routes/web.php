@@ -53,3 +53,20 @@ Route::post('walletAdd/{id}', 'apiGatewayController@addMoney');
 
 Route::post('pay', 'apiGatewayController@pagarRenda');
 
+
+
+
+// ********************** MICRO INTERESSADO ************************
+
+
+Route::get('homeInteressado', 'apiGatewayController@showHomeInteressado');
+
+Route::get('interessadoProfile/{id}', 'apiGatewayController@showInteressadoProfile');
+
+Route::get('walletInteressado/{id}', 'apiGatewayController@showWalletInteressado');
+
+Route::get('findPropriedadeInteressado/{idUser}', 'apiGatewayController@encontrarPropriedade');
+
+
+
+Route::post('editInteressado/{id}', 'apiGatewayController@');

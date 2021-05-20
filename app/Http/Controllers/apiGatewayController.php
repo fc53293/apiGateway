@@ -44,7 +44,7 @@ class apiGatewayController extends Controller
 
         curl_close($ch);
     }
-    
+
     public function createNewUser(Request $request)
     {
 
@@ -256,7 +256,7 @@ class apiGatewayController extends Controller
             $ch = curl_init();
 
             //Return the page content
-            curl_setopt($ch, CURLOPT_URL, "http://microsenhorio-deployment:8082/");
+            curl_setopt($ch, CURLOPT_URL, "http://microsenhorio-service:8083/");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
             curl_exec($ch);
           
@@ -274,7 +274,7 @@ class apiGatewayController extends Controller
             $ch = curl_init();
 
             //Return the page content
-            curl_setopt($ch, CURLOPT_URL, "http://microinteressado-deployment:8083/");
+            curl_setopt($ch, CURLOPT_URL, "http://microinteressado-service:8082/");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
             curl_exec($ch);
           
@@ -287,6 +287,69 @@ class apiGatewayController extends Controller
         }
         //return response()->json($user);
     }
+
+
+
+
+
+
+
+
+
+
+
+    // ****************************************** MICRO INTERESSADO  *********************************
+
+    public function showHomeInteressado()
+    {
+        //Initialize the cURL session
+        $ch = curl_init();
+
+        //Return the page content
+        
+        curl_setopt($ch, CURLOPT_URL, "http://microinteressado-service:8082/");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+        
+        curl_exec($ch);
+
+        curl_close($ch);
+    }
+
+
+
+    public function showInteressadoProfile()
+    {
+        //Initialize the cURL session
+        $ch = curl_init();
+
+        //Return the page content
+        
+        curl_setopt($ch, CURLOPT_URL, "http://microinteressado-service:8082/inquilinoInteressado/2");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+        
+        curl_exec($ch);
+
+        curl_close($ch);
+    }
+
+
+    public function showWallet()
+    {
+        //Initialize the cURL session
+        $ch = curl_init();
+
+        //Return the page content
+        
+        curl_setopt($ch, CURLOPT_URL, "http://microinteressado-service:8082/wallet/2");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+        
+        curl_exec($ch);
+
+        curl_close($ch);
+    }
+
+
+
 
 }
 ?>
