@@ -18,11 +18,11 @@
   <script src="https://www.gstatic.com/firebasejs/8.6.0/firebase.js"></script>
         <script>
         
-        var config = {
-            apiKey: "AIzaSyD8o4OnimxIsq-3B7e05FeBj5qUq65HTXA",
-            authDomain: "projetoptiptr-307918.firebaseapp.com",
-        };
-        firebase.initializeApp(config);
+        // var config = {
+        //     apiKey: "AIzaSyD8o4OnimxIsq-3B7e05FeBj5qUq65HTXA",
+        //     authDomain: "projetoptiptr-307918.firebaseapp.com",
+        // };
+        // firebase.initializeApp(config);
         </script>
 </head>
 
@@ -107,21 +107,21 @@
     function confirmation(){
     alert("OLA");
     
-    var email = document.getElementById("mail").value;
-    var password = document.getElementById("passUser").value;
+    // var email = document.getElementById("mail").value;
+    // var password = document.getElementById("passUser").value;
 
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      // Signed in
-      document.getElementById('formRegistar').submit();
-      var user = userCredential.user;
-      // ...
-    })
-    .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // ..
-    });
+    // firebase.auth().createUserWithEmailAndPassword(email, password)
+    // .then((userCredential) => {
+    //   // Signed in
+    document.getElementById('formRegistar').submit();
+    //   var user = userCredential.user;
+    //   // ...
+    // })
+    // .catch((error) => {
+    //   var errorCode = error.code;
+    //   var errorMessage = error.message;
+    //   // ..
+    // });
 
 
 }

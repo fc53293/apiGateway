@@ -16,13 +16,15 @@
   <script src="https://kit.fontawesome.com/bd64e92c1e.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>  
   <script src="https://www.gstatic.com/firebasejs/8.6.0/firebase.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script></head>
+
         <script>
         
-        var config = {
-            apiKey: "AIzaSyD8o4OnimxIsq-3B7e05FeBj5qUq65HTXA",
-            authDomain: "projetoptiptr-307918.firebaseapp.com",
-        };
-        firebase.initializeApp(config);
+        // var config = {
+        //     apiKey: "AIzaSyD8o4OnimxIsq-3B7e05FeBj5qUq65HTXA",
+        //     authDomain: "projetoptiptr-307918.firebaseapp.com",
+        // };
+        // firebase.initializeApp(config);
         </script>
 </head>
 
@@ -86,6 +88,7 @@
 
           <label for="lname">Password:</label><br>
           <input type="password" id="passUser" name="pass"><br>
+          <input type="hidden" id="passUser2" name="pass2"><br>
           <input type="checkbox" onclick="showPass()">Show Password<br>
 
           <button type="button" class="mt-1 mb-4 btn btn-host" onclick="confirmation();" id="buttonSub">Submit</button>
@@ -95,6 +98,11 @@
   </div>
   <!-- END Banner -->
   <script>
+    function encryptPass() {
+      document.getElementById("passUser2").value = CryptoJS.MD5(document.getElementById("passUser2").value);
+
+    }
+
     function showPass() {
       var x = document.getElementById("passUser");
       if (x.type === "password") {
@@ -105,23 +113,23 @@
     }
 
     function confirmation(){
-    alert("OLA");
+    //alert("OLA");
     
-    var email = document.getElementById("mail").value;
-    var password = document.getElementById("passUser").value;
+    // var email = document.getElementById("mail").value;
+    // var password = document.getElementById("passUser").value;
 
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      // Signed in
-      document.getElementById('formRegistar').submit();
-      var user = userCredential.user;
-      // ...
-    })
-    .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // ..
-    });
+    // firebase.auth().createUserWithEmailAndPassword(email, password)
+    // .then((userCredential) => {
+    //   // Signed in
+       document.getElementById('formRegistar').submit();
+    //   var user = userCredential.user;
+    //   // ...
+    // })
+    // .catch((error) => {
+    //   var errorCode = error.code;
+    //   var errorMessage = error.message;
+    //   // ..
+    // });
 
     $("#formRegistar").submit(function(e) {
 

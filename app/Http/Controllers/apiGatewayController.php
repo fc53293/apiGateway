@@ -51,7 +51,7 @@ class apiGatewayController extends Controller
         $user = new Utilizador();
         $user->Username=$request->input('username');
         $user->Email=$request->input('mail');
-        $user->Password=$request->input('pass');
+        $user->Password=md5($request->input('pass'));
         $user->PrimeiroNome=$request->input('firstName');
         $user->UltimoNome=$request->input('lastName');
         $user->Nacionalidade=$request->input('nacionalidade');
@@ -256,7 +256,7 @@ class apiGatewayController extends Controller
             $ch = curl_init();
 
             //Return the page content
-            curl_setopt($ch, CURLOPT_URL, "http://microsenhorio-deployment:8082/");
+            curl_setopt($ch, CURLOPT_URL, "http://microsenhorio-service:8083/");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
             curl_exec($ch);
           
@@ -274,7 +274,7 @@ class apiGatewayController extends Controller
             $ch = curl_init();
 
             //Return the page content
-            curl_setopt($ch, CURLOPT_URL, "http://microinteressado-deployment:8083/");
+            curl_setopt($ch, CURLOPT_URL, "http://microinteressado-service:8082/");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
             curl_exec($ch);
           
