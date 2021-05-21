@@ -380,6 +380,67 @@ class apiGatewayController extends Controller
 
     }
 
+    public function starNewRent(Request $request, $idProp,$idUser)
+    {
+
+        $userLoged = $idUser;
+        
+        $data = Utilizador::where('IdUser',$userLoged)->get();
+        $prop = Propriedade::where('IdPropriedade',$idProp)->value('DuracaoAluguer');
+        $prop2 = Propriedade::where('IdPropriedade',$idProp)->value('Preco');
+        $prop3IdSenhorio = Propriedade::where('IdPropriedade',$idProp)->value('IdSenhorio');
+        $prop4IdUser = Senhorio::where('IdSenhorio',$prop3IdSenhorio)->value('IdUser');
+        // dd($prop4IdUser);
+        $guardaSaldo = null;
+        //$guardaPreco = null;
+        foreach ($data as $data1){
+            $guardaSaldo = $data1['Saldo'];
+        }
+     
+        // foreach ($prop as $prop1){
+        //     $guardaPreco = $prop1['Preco'];
+        // }
+
+        if ($result = $guardaSaldo < $prop2){
+            //return compact('result');
+            return response()->json("Nao tem dinheiro suficiente");
+        }
+     
+        else{
+            foreach ($data as $dataz) {
+        
+        
+                $user = new Inquilino();
+                $user->IdUser=$userLoged;
+                $user->Username=$dataz->Username;
+                $user->IdPropriedade=$idProp;
+                $user->InicoiContrato=Carbon::now();
+                $user->FimContrato=Carbon::now()->addMonthsNoOverflow((int)$prop);
+                $user->save();
+                }
+        
+                //$prop = Propriedade::where('IdPropriedade','=',$idProp)->get();
+                $prop = Propriedade::where('IdPropriedade', $idProp)
+               ->update([
+                   'Disponibilidade' => 'indisponivel'
+                ]);
+                $data = Utilizador::where('IdUser',$userLoged)
+                ->update([
+                    'Saldo' => $guardaSaldo-$prop2
+                 ]);
+
+                $data2 = Utilizador::where('IdUser',$prop4IdUser)
+                ->update([
+                    'Saldo' => +$prop2
+                ]);
+
+                //return response()->json($prop);
+                return redirect('http://myunirent.pt/homeInteressado');
+        }
+
+
+    }
+
 
     public function showCurrentUser(Request $request)
     {

@@ -77,3 +77,5 @@ Route::post('rateProperty/{idProp}/user/{idUser}', 'apiGatewayController@ratePro
 
 Route::post('editInteressado/{id}', 'apiGatewayController@updateInteressado');
 
+Route::post('startNewRent/{idProp}/user/{idUser}', 'apiGatewayController@startNewRent');
+
