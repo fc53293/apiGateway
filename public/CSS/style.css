@@ -109,6 +109,13 @@ h3 {
           box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.05) !important;
 }
 
+.profile-container__searchOptions {
+  border-radius: 10px !important;
+  background-color: white !important;
+  -webkit-box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.05) !important;
+          box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
 .recentViewed {
   margin-left: 15px !important;
   margin-right: 15px !important;
@@ -267,6 +274,59 @@ h3 {
   color: #ffffff;
 }
 
+/******************** SIDEBAR ************************/
+.sidebar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.widget {
+  padding: 0.75rem 1.25rem;
+  width: 278px;
+  color: rgba(0, 0, 0, 0.87);
+  background-color: white;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.widget h2 {
+  background-color: whitesmoke;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  margin-top: -0.75rem;
+  margin-left: -1.25rem;
+  margin-right: -1.25rem;
+  padding: 0.75rem 1.25rem;
+  text-align: center;
+  cursor: default;
+}
+
+.widget form label {
+  width: 100%;
+  text-align: center;
+}
+
+.widget:hover h2 {
+  background-color: #ebebeb;
+}
+
+#user_age_handler_min, #user_age_handler_max {
+  width: 3em;
+  margin-left: -1.5em;
+  height: 1.6em;
+  top: 50%;
+  margin-top: -.8em;
+  text-align: center;
+  line-height: 1.6em;
+}
 
 /************/
 /* Wallet Style */
@@ -377,6 +437,17 @@ h3 {
   overflow:auto
   }
 
+  #abc2 {
+    width: 30%;
+    top: 50%;
+    left: 50%;
+    display: none;
+    position: fixed;
+    background-color: rgb(232 242 251);
+    overflow: auto;
+    transform: translate(-50%, -50%);
+}
+
   #formAddSaldo > img#close {
     position: absolute;
     top: -10;
@@ -391,7 +462,11 @@ h3 {
       align-content: center;
       margin-top: 50%;
       position: relative;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
+
     #formAddSaldo {
     max-width:300px;
     min-width:250px;
@@ -456,7 +531,6 @@ h3 {
     border-radius:5px
     }
     span {
-    color:red;
     font-weight:700
     }
 
