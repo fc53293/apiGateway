@@ -63,5 +63,17 @@ Route::get('interessadoProfile/{id}', 'apiGatewayController@showInteressadoProfi
 
 Route::get('walletInteressado/{id}', 'apiGatewayController@showWalletInteressado');
 
-Route::get('findPropriedadeInteressado/{idUser}', 'apiGatewayController@encontrarPropriedade');
+Route::get('propertyInfo/{id}/user/{idUser}', 'apiGatewayController@propertyInfo')
+
+Route::post('walletAddInteressado/{id}', 'apiGatewayController@addSaldoInteressado');
+
+Route::get('findPropriedadeInteressado/{idUser}', 'apiGatewayController@findPropriedade');
+
+Route::post('likeProperty/{idProp}/user/{idUser}', 'apiGatewayController@likeProp');
+
+Route::post('nolikeProperty/{idProp}/user/{idUser}', 'apiGatewayController@deleteLikeProp');
+
+Route::post('rateProperty/{idProp}/user/{idUser}', 'apiGatewayController@rateProp');
+
+Route::post('editInteressado/{id}', 'apiGatewayController@updateInteressado');
 
