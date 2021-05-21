@@ -5,11 +5,15 @@ use DB;
 use App\routes\web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Artigo;
 use App\Models\Utilizador;
 use App\Models\Inquilino;
 use App\Models\HistoricoSaldo;
 use App\Models\Pagamento;
+use App\Models\Rating;
+use App\Models\Likes;
+use App\Models\Senhorio;
+use App\Models\Propriedade;
+
 use Carbon\Carbon;
 
 class apiGatewayController extends Controller
@@ -44,7 +48,7 @@ class apiGatewayController extends Controller
 
         curl_close($ch);
     }
-    
+
     public function createNewUser(Request $request)
     {
 
@@ -218,22 +222,221 @@ class apiGatewayController extends Controller
     }
 
 
+
+    public function showHomeInteressado()
+    {
+        //Initialize the cURL session
+        $ch = curl_init();
+
+        //Return the page content
+        
+        curl_setopt($ch, CURLOPT_URL, "http://microinteressado-service:8082/homeInteressado");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+        
+        curl_exec($ch);
+
+        curl_close($ch);
+    }
+
+
+
+    public function showInteressadoProfile()
+    {
+        //Initialize the cURL session
+        $ch = curl_init();
+
+        //Return the page content
+        
+        curl_setopt($ch, CURLOPT_URL, "http://microinteressado-service:8082/interessadoProfile/2");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+        
+        curl_exec($ch);
+
+        curl_close($ch);
+    }
+
+
+    public function showWalletInteressado()
+    {
+        //Initialize the cURL session
+        $ch = curl_init();
+
+        //Return the page content
+        
+        curl_setopt($ch, CURLOPT_URL, "http://microinteressado-service:8082/walletInteressado/2");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+        
+        curl_exec($ch);
+
+        curl_close($ch);
+    }
+
+    //Updates Inqilino
+    public function updateInteressado(Request $req, $id)
+    {
+        $data = Utilizador::find($id);
+        $data->Username=$req->input('nomeUser');
+        $data->PrimeiroNome=$req->input('primeiroNome');
+        $data->UltimoNome=$req->input('ultimoNome');
+        $data->Email=$req->input('mail');
+        $data->Morada=$req->input('morada');
+        $data->Nascimento=$req->input('dateNascimento');
+        $data->save();
+        
+        return response()->json('Updated successfully.');
+    }
+
+    //Adiciona uma quantidade de saldo ao saldo atual do inquilino
+    public function addSaldoInteressado($id, Request $amount){
+        $user = Utilizador::find($id);
+        $user->Saldo=$amount->input('amountToAdd')+$user->Saldo;
+        $user->save();
+
+        $histSaldo = new HistoricoSaldo();
+        //$user->IdSaldo=1;
+        $histSaldo->IdUser=$id;
+        $histSaldo->Username=$amount->input('nameUser');
+        $histSaldo->Valor=$amount->input('amountToAdd');
+        $histSaldo->Data=Carbon::now();
+        $histSaldo->save();
+
+        return response()->json(['res'=>$user->Saldo]);
+    }
+
+    public function propertyInfo($id,$idUser)
+    {
+        $property = Propriedade::where('IdPropriedade', $id)->get();
+        $ratingGiven = Rating::where('IdPropriedade', $id)->where('IdUser',$idUser)->get();
+        $avgStar = Rating::where('IdPropriedade', $id)->avg('Rating');
+
+
+        //return response()->json($avgStar);
+        return view('propInfo',compact('property','ratingGiven','avgStar'));
+    }
+
+
+    public function findPropriedade(Request $request, $idUser)
+    {
+        //$user = Utilizador::where('username','=' ,$username)->where('TipoConta','=' ,'Interessado')->get();
+        $dataLike = Likes::where('IdUser',$idUser)->get();
+        //$search_data2 = $_GET['query'];
+        $search_data1 = $request->input('tipoProp');
+        $search_data2 = $request->input('query2');
+        $search_data3 = $request->input('areaMetros');
+        $search_data4 = $request->input('lprice');
+        $search_data5 = $request->input('nquartos');
+        $search_data6 = $request->input('oriSolar1');
+        //$search_data7 = $request->input('oriSolar2');
+
+        $proprerties = Propriedade::where('Localizacao', 'LIKE', '%'.$search_data2.'%');
+        if (!$search_data1 && !$search_data2 && !$search_data3 && !$search_data4){
+            $proprerties = Propriedade::where('Localizacao', 'LIKE', '%'.$search_data2.'%');
+        }
+        //dd($search_data4);
+        if ($search_data1){
+            $proprerties = Propriedade::where('TipoPropriedade', 'LIKE', '%'.$search_data1.'%');
+
+        }
+
+        if ($search_data2){
+            $proprerties = $proprerties->where('Localizacao', 'LIKE', '%'.$search_data2.'%');
+
+        }
+
+        if ($search_data4){
+            $proprerties = $proprerties->where('Preco', '<',(int)$search_data4);
+
+        }
+
+        if ($search_data5){
+            $proprerties = $proprerties->where('NumeroQuartos',(int)$search_data5);
+
+        }
+
+        if ($search_data6){
+            //dd($search_data6);
+            $proprerties = $proprerties->where('OrientacaoSolar',$search_data6);
+
+        }
+
+
+        // else if ($search_data3 == ""){
+        //     $proprerties = Propriedade::where('TipoPropriedade', 'LIKE', '%'.$search_data1.'%')
+        //     ->where('Localizacao', 'LIKE', '%'.$search_data2.'%')
+        //     //->where('AreaMetros', '<',(int)$search_data3)
+        //     //->where('Preco', '<',(int)$search_data4)
+        //     ->paginate(1);
+        // }
+        // else{
+        //     $proprerties = Propriedade::where('TipoPropriedade', 'LIKE', '%'.$search_data1.'%')
+        //     ->where('Localizacao', 'LIKE', '%'.$search_data2.'%')
+        //     ->where('AreaMetros', '<',(int)$search_data3)
+        //     ->where('Preco', '<',(int)$search_data4)
+        //     ->get();
+        // }
+        //$proprerties->appends($request->all());
+        $proprerties = $proprerties->where('Disponibilidade','disponivel')->paginate(1)->appends(request()->query());
+        //return response()->json($dataLike);
+        return view('find_propriedade',compact('proprerties','dataLike'));
+    }
+
+
+    //Atribuir interesse a uma propriedade, dando like
+    public function likeProp(Request $request,$idProp,$idUser)
+    {
+        $userLoged = $idUser;
+
+        $proplike = new Likes();
+        $proplike->IdUser=$userLoged;
+        $proplike->IdPropriedade=$idProp;
+        $proplike->Data=Carbon::now();
+        $proplike->save();
+
+        return response()->json('Deu like na propriedade');
+
+    }
+
+
+    //Retirar o like dado anteriormente 
+    public function deleteLikeProp($idProp,$idUser)
+    {
+        $proplike=Likes::where('IdPropriedade',$idProp)->where('IdUser',$idUser)->delete();
+
+        return response()->json('Like retirado com sucesso');
+
+    }
+
+
+    //Atribuir pontuação a uma propriedade
+    public function rateProp(Request $req, $idProp, $idUser)
+    {
+        $proplike = new Rating();
+        $proplike->IdUser=$idUser;
+        $proplike->IdPropriedade=$idProp;
+        $proplike->Rating=$req->input('star');
+        $proplike->Data=Carbon::now();
+        $proplike->save();
+
+        $avgStar = Rating::where('IdPropriedade', $idProp)->avg('Rating');
+
+
+        //return compact('medStar');
+        return response()->json(['res'=>$avgStar]);
+
+    }
+
+
     public function showCurrentUser(Request $request)
     {
         
         $email = $request->input('email');
         $password = $request->input('password');
-
-        $user = Utilizador::where('Email', $email)->get();
-        foreach($user as $infoUser){
-            $tipoconta = $infoUser->TipoConta;
-        }
+        $tipoconta = Utilizador::where('Email', $email)->value("TipoConta");
 
         echo $tipoconta;
         
-        if ($tipoconta = "Inquilino"){
+        if ($tipoconta == "Inquilino"){
             
-
             $ch = curl_init();
 
             //Return the page content
@@ -248,7 +451,7 @@ class apiGatewayController extends Controller
 
 
             
-        } else if ($tipoconta = "Senhorio") {
+        } else if ($tipoconta == "Senhorio") {
 
             
 
@@ -266,27 +469,22 @@ class apiGatewayController extends Controller
 
             
 
-        } else if ($tipoconta = "Interessado") {
-
-            
+        } else if ($tipoconta == "Interessado") {
 
             //Initialize the cURL session
             $ch = curl_init();
 
             //Return the page content
-            curl_setopt($ch, CURLOPT_URL, "http://microinteressado-service:8082/");
+            curl_setopt($ch, CURLOPT_URL, "http://microinteressado-service:8082/homeInteressado");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
             curl_exec($ch);
           
             curl_close($ch);
 
-
-
-           
-
         }
-        //return response()->json($user);
     }
+
+
 
 }
 ?>
