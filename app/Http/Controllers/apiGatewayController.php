@@ -315,69 +315,19 @@ class apiGatewayController extends Controller
     }
 
 
-    public function findPropriedade(Request $request, $idUser)
+    public function findPropriedade()
     {
-        //$user = Utilizador::where('username','=' ,$username)->where('TipoConta','=' ,'Interessado')->get();
-        $dataLike = Likes::where('IdUser',$idUser)->get();
-        //$search_data2 = $_GET['query'];
-        $search_data1 = $request->input('tipoProp');
-        $search_data2 = $request->input('query2');
-        $search_data3 = $request->input('areaMetros');
-        $search_data4 = $request->input('lprice');
-        $search_data5 = $request->input('nquartos');
-        $search_data6 = $request->input('oriSolar1');
-        //$search_data7 = $request->input('oriSolar2');
+       //Initialize the cURL session
+       $ch = curl_init();
 
-        $proprerties = Propriedade::where('Localizacao', 'LIKE', '%'.$search_data2.'%');
-        if (!$search_data1 && !$search_data2 && !$search_data3 && !$search_data4){
-            $proprerties = Propriedade::where('Localizacao', 'LIKE', '%'.$search_data2.'%');
-        }
-        //dd($search_data4);
-        if ($search_data1){
-            $proprerties = Propriedade::where('TipoPropriedade', 'LIKE', '%'.$search_data1.'%');
+       //Return the page content
+       
+       curl_setopt($ch, CURLOPT_URL, "http://microinteressado-service:8082/findPropriedadeInteressado/2");
+       curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+       
+       curl_exec($ch);
 
-        }
-
-        if ($search_data2){
-            $proprerties = $proprerties->where('Localizacao', 'LIKE', '%'.$search_data2.'%');
-
-        }
-
-        if ($search_data4){
-            $proprerties = $proprerties->where('Preco', '<',(int)$search_data4);
-
-        }
-
-        if ($search_data5){
-            $proprerties = $proprerties->where('NumeroQuartos',(int)$search_data5);
-
-        }
-
-        if ($search_data6){
-            //dd($search_data6);
-            $proprerties = $proprerties->where('OrientacaoSolar',$search_data6);
-
-        }
-
-
-        // else if ($search_data3 == ""){
-        //     $proprerties = Propriedade::where('TipoPropriedade', 'LIKE', '%'.$search_data1.'%')
-        //     ->where('Localizacao', 'LIKE', '%'.$search_data2.'%')
-        //     //->where('AreaMetros', '<',(int)$search_data3)
-        //     //->where('Preco', '<',(int)$search_data4)
-        //     ->paginate(1);
-        // }
-        // else{
-        //     $proprerties = Propriedade::where('TipoPropriedade', 'LIKE', '%'.$search_data1.'%')
-        //     ->where('Localizacao', 'LIKE', '%'.$search_data2.'%')
-        //     ->where('AreaMetros', '<',(int)$search_data3)
-        //     ->where('Preco', '<',(int)$search_data4)
-        //     ->get();
-        // }
-        //$proprerties->appends($request->all());
-        $proprerties = $proprerties->where('Disponibilidade','disponivel')->paginate(1)->appends(request()->query());
-        //return response()->json($dataLike);
-        return view('find_propriedade',compact('proprerties','dataLike'));
+       curl_close($ch);
     }
 
 
