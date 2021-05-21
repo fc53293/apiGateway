@@ -63,7 +63,7 @@ Route::get('interessadoProfile/{id}', 'apiGatewayController@showInteressadoProfi
 
 Route::get('walletInteressado/{id}', 'apiGatewayController@showWalletInteressado');
 
-Route::get('propertyInfo/{id}/user/{idUser}', 'apiGatewayController@propertyInfo')
+Route::get('propertyInfo/{id}/user/{idUser}', 'apiGatewayController@propertyInfo');
 
 Route::post('walletAddInteressado/{id}', 'apiGatewayController@addSaldoInteressado');
 
