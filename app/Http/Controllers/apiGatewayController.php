@@ -305,13 +305,18 @@ class apiGatewayController extends Controller
 
     public function propertyInfo($id,$idUser)
     {
-        $property = Propriedade::where('IdPropriedade', $id)->get();
-        $ratingGiven = Rating::where('IdPropriedade', $id)->where('IdUser',$idUser)->get();
-        $avgStar = Rating::where('IdPropriedade', $id)->avg('Rating');
+        //Initialize the cURL session
+       $ch = curl_init();
 
+       //Return the page content
+       
+       curl_setopt($ch, CURLOPT_URL, "http://microinteressado-service:8082/propertyInfo/".$id."/user/2");
+       curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+       
+       curl_exec($ch);
 
-        //return response()->json($avgStar);
-        return view('propInfo',compact('property','ratingGiven','avgStar'));
+       curl_close($ch);
+
     }
 
 
