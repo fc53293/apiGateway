@@ -68,7 +68,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.global-static-ip-name: "myunirent-ip"
     networking.gke.io/managed-certificates: certificadogrupo07
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   rules:
     - host: myunirent.pt
